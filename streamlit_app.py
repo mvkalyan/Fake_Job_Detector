@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
-from st_aggrid import AgGrid, GridOptionsBuilder
 
 # Page setup
 st.set_page_config(page_title="Fake Job Post Detection", layout="wide", initial_sidebar_state="expanded")
@@ -23,13 +22,16 @@ uploaded_file = st.file_uploader("📁 Upload your job postings CSV", type=["csv
 
 if uploaded_file:
     try:
+        # Read uploaded file
         df = pd.read_csv(uploaded_file)
         st.success("✅ File uploaded and processed successfully!")
 
         # Preprocessing
-        df['combined_text'] = df['title'].fillna('') + " " + \
-                              df['company_profile'].fillna('') + " " + \
-                              df['description'].fillna('')
+        df['combined_text'] = (
+            df['title'].fillna('') + " " +
+            df['company_profile'].fillna('') + " " +
+            df['description'].fillna('')
+        )
 
         # Vectorize and predict
         X = vectorizer.transform(df['combined_text'])
@@ -41,32 +43,24 @@ if uploaded_file:
 
         with tab1:
             st.markdown("### 📋 All Job Posts with Predictions")
-            threshold = st.slider("🔽 Set fraud probability threshold", 0.0, 1.0, 0.5, 
-                                  help="Only show jobs above this fraud probability")
-
+            threshold = st.slider(
+                "🔽 Set fraud probability threshold", 0.0, 1.0, 0.5,
+                help="Only show jobs above this fraud probability"
+            )
             filtered_df = df[df["Fraud_Probability"] >= threshold]
             st.write(f"Showing {len(filtered_df)} posts with fraud probability ≥ {threshold}")
-
-            gb = GridOptionsBuilder.from_dataframe(
-                filtered_df[["title", "company_profile", "description", "Fraud_Probability", "Predicted_Label"]]
-            )
-            gb.configure_pagination()
-            gb.configure_side_bar()
-            grid_options = gb.build()
-
-            AgGrid(filtered_df, gridOptions=grid_options, height=400, fit_columns_on_grid_load=True)
+            st.dataframe(filtered_df[["title", "company_profile", "description", "Fraud_Probability", "Predicted_Label"]])
 
         with tab2:
             st.markdown("### 🧨 Top 10 Suspicious Job Posts")
             top10 = df.sort_values("Fraud_Probability", ascending=False).head(10)
-            AgGrid(top10[["title", "company_profile", "description", "Fraud_Probability"]], 
-                   height=400, fit_columns_on_grid_load=True)
+            st.dataframe(top10[["title", "company_profile", "description", "Fraud_Probability"]])
 
         with tab3:
             st.markdown("### 📈 Prediction Summary")
-            st.bar_chart(df["Predicted_Label"].value_counts(), use_container_width=True)
+            st.bar_chart(df["Predicted_Label"].value_counts())
             st.markdown("### 📉 Fraud Probability Spread")
-            st.line_chart(df["Fraud_Probability"].sort_values().reset_index(drop=True), use_container_width=True)
+            st.line_chart(df["Fraud_Probability"].sort_values().reset_index(drop=True))
 
         # Download button
         csv = df.to_csv(index=False).encode("utf-8")
