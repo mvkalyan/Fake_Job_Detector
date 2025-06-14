@@ -44,7 +44,7 @@ Recall (Fraud class): ~52% with threshold tuning
 🛠 How to Run
  
 # 1. Clone the repository
-$ git clone [https://github.com/yourusername/spot-the-scam-app.git](https://github.com/mvkalyan/Fake_Job_Detector.git)
+$ git clone [https://github.com/mvkalyan/Fake_Job_Detector.git](https://github.com/mvkalyan/Fake_Job_Detector.git)
 $ cd spot-the-scam-app
  
 # 2. Install requirements
