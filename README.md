@@ -1,4 +1,4 @@
-🕵️ #Spot The Scam: Fake Job Post Detector
+🕵️ Spot The Scam: Fake Job Post Detector
  
  
  
