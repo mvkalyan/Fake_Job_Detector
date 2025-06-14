@@ -21,8 +21,6 @@ Spot The Scam is a Streamlit web app that uses machine learning to detect potent
  
 📥 Download predictions
  
-🌗 Light/Dark mode toggle
- 
 📋 Enhanced table views with AgGrid
  
  
