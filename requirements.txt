@@ -1,7 +1,5 @@
---prefer-binary
-streamlit
-pandas==2.2.0
-scikit-learn==1.4.2
-matplotlib
-seaborn
-numpy
+streamlit==1.25.0
+pandas==2.2.1
+scikit-learn==1.3.2
+joblib==1.3.2
+st-aggrid==0.3.4.post3
