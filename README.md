@@ -71,9 +71,7 @@ spot-the-scam-app/
  
 🔗 Demo Links
  
-🔴 Demo Video: Watch on YouTube
- 
-🌐 Deployed App (Optional): Visit App
+🔴 Demo Video: https://drive.google.com/file/d/1GNxxkuUGzR-KkW3CRGSwB5oJ7bR8MVlh/view?usp=drivesdk
  
  
  
